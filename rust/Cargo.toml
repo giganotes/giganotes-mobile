@@ -1,0 +1,23 @@
+
+[package]
+name = "rust"
+version = "0.1.0"
+authors = ["Nish Tahir <nish.tahir@willowtreeapps.com>"]
+
+[dependencies]
+jni = "0.5.2"
+giganotes-core = { path = "../../giganotes-core" }
+android_logger = "0.9"
+log = "0.4.11"
+
+[target.armv7-linux-androideabi.dependencies]
+openssl = { version = "*", features = ["vendored"] }
+
+
+[lib]
+crate_type = ["staticlib", "dylib"]
+
+[features]
+default = ["foo"]
+foo = []
+bar = []
