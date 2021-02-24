@@ -16,6 +16,7 @@ import {
   GetNotesList,
   GetNoteById,
   GetNoteByIdResponse,
+  SearchNotes,
   CreateNote, CreateNoteResponse, CreateFolder, CreateFolderResponse, UpdateNote, UpdateFolder
 } from '../../proto/messages_pb';
 import {AuthResponse} from '../model/server-responses-models/auth-response';
@@ -291,6 +292,31 @@ export class InteropService {
 
   async synchronize(): Promise<void> {
     return this.runCommand('runCoreCommand', {command : 7});
+  }
+
+  async searchNotes(query: string, folderId: string): Promise<Note[]> {
+    const searchNotesCommand = new SearchNotes();
+    searchNotesCommand.setQuery(query);
+    searchNotesCommand.setFolderid(folderId);
+    const commandData = searchNotesCommand.serializeBinary();
+    const result = await this.runCommand('runCoreCommand', {command : 18, data: commandData});
+    const buffer = base64.parse(result, { loose : true});
+    const props = GetNotesListResponse.deserializeBinary(buffer).toObject() as GetNotesListResponse.AsObject;
+    const notes = props.notesList.map((n: NoteShortInfo.AsObject) => {
+        const note: Note = {
+          id: n.id,
+          title: n.title,
+          text: '',
+          folderId: n.folderid,
+          level: 0,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          userId: 0,
+          deletedAt: new Date()
+        };
+        return note;
+    });
+    return notes;
   }
 
   async googleSignIn(): Promise<any> {

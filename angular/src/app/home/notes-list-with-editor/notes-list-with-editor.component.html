@@ -148,6 +148,7 @@
               style="height:100%; width:100%"
               [(ngModel)]="selectedNote.text"
               (onDblclick)="handleEditorClick($event)"
+              (onSetContent)="handleOnLoadContent($event)"
             >
             </editor>
           </div>
@@ -179,6 +180,8 @@
       </button>
       <span>{{ getMobileTitle() }}</span>
       <span fxFlex></span>
+
+      <mat-search-bar (onEnter)="onSearchMobile($event)"></mat-search-bar>
 
       <button mat-icon-button (click)="doSync()" *ngIf="!mobileShowBackButton && !authService.isOffline">
         <mat-icon [ngClass]="{'fa-spin': isSyncing()}">sync</mat-icon>
@@ -289,12 +292,13 @@
         (focusout)="onNoteNameInputFocusOut()"
       />
       <editor
-        *ngIf="isEditorScriptLoaded && isSelectedNoteLoaded"
+        *ngIf="isEditorScriptLoaded && !showMobileList"
         [init]="editorSetup"
         fxLayout="column"
         style="height:100%; width:100%"
         [(ngModel)]="selectedNote.text"
         (onClick)="handleEditorClick($event)"
+        (onSetContent)="handleOnLoadContent($event)"
       >
       </editor>
       </div>

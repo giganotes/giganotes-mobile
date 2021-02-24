@@ -85,31 +85,7 @@ export class NoteManagerService {
     }
 
     async searchNotes(query: string, folderId: string): Promise<Note[]> {
-    /*  const parent = this;
-      const promise = new Promise<Note[]>(function (resolve, reject) {
-        ipcRenderer.once('note-manager-service-searchnotes-reply', (event, arg) => {
-          var props = GetNotesListResponse.deserializeBinary(arg).toObject() as GetNotesListResponse.AsObject;
-          var notes = props.notesList.map((n: NoteShortInfo.AsObject) => {
-              const note : Note = {
-                id: n.id,
-                title: n.title,
-                text: "",
-                folderId: n.folderid,
-                level: 0,
-                createdAt: new Date(),
-                updatedAt: new Date(),
-                userId: 0,
-                deletedAt: new Date()
-              };
-              return note;
-          });
-          resolve(notes);
-        });
-      });
-
-      ipcRenderer.send('note-manager-service-searchnotes-request', {query : query, folderId: folderId});
-      return promise;*/
-      return null;
+      return this.interopService.searchNotes(query, folderId);
    }
 
     async getFavoriteNotes(): Promise<Note[]> {
