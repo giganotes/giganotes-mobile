@@ -1,4 +1,3 @@
-import { MatSearchBarComponent } from './mat-search-bar/mat-search-bar.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { NavigationTreeComponent } from '../home/navigation-tree/navigation-tree.component';
@@ -95,8 +94,7 @@ const homeRoutes: Routes = [
     RenameFolderDialogComponent,
     SelectFolderDialogComponent,
     ConfirmDialogComponent,
-    SettingsComponent,
-    MatSearchBarComponent
+    SettingsComponent
   ]
 })
 export class HomeRoutingModule { }

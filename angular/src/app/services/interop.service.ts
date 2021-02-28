@@ -297,8 +297,11 @@ export class InteropService {
   async searchNotes(query: string, folderId: string): Promise<Note[]> {
     const searchNotesCommand = new SearchNotes();
     searchNotesCommand.setQuery(query);
-    searchNotesCommand.setFolderid(folderId);
-    const commandData = searchNotesCommand.serializeBinary();
+    if (folderId != null) {
+      searchNotesCommand.setFolderid(folderId);
+    }
+
+    const commandData = base64.stringify(searchNotesCommand.serializeBinary());
     const result = await this.runCommand('runCoreCommand', {command : 18, data: commandData});
     const buffer = base64.parse(result, { loose : true});
     const props = GetNotesListResponse.deserializeBinary(buffer).toObject() as GetNotesListResponse.AsObject;

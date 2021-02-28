@@ -28,18 +28,34 @@ import { DynamicScriptLoaderService } from '../../services/dynamic-script-loader
 import { ScreenChangedEvent } from '../../model/events/screen-changed';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { from, Subscription } from 'rxjs';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger
+} from '@angular/animations';
 
 @Component({
   selector: "app-notes-list-with-editor",
   templateUrl: "./notes-list-with-editor.component.html",
   styleUrls: ["./notes-list-with-editor.component.scss"],
-  host: { style: "height:100%; display: flex; flex-direction:column" }
+  host: { style: "height:100%; display: flex; flex-direction:column" },
+  animations: [
+    trigger('slideInOut', [
+      state('true', style({ width: '*' })),
+      state('false', style({ width: '0' })),
+      transition('true => false', animate('300ms ease-in')),
+      transition('false => true', animate('300ms ease-out'))
+    ])
+  ],
 })
 export class NotesListWithEditorComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   @ViewChild(NavigationTreeComponent) navigationTree: NavigationTreeComponent;
   @ViewChild(MatSidenav) sidenav: MatSidenav;
   @ViewChild('fileInput') fileInput: ElementRef;
+  @ViewChild('inputSearch') inputSearch: ElementRef;
 
   INTERNAL_LINK_PREFIX = "local:";
 
@@ -55,6 +71,7 @@ export class NotesListWithEditorComponent implements OnInit, OnDestroy, AfterVie
   navTreeEventsService = new NavTreeEventsService();
   isNavMenuLoaded = false;
   isSyncOnInitDone = false;
+  searchVisible = false;
   isOffline = false;
   isEditorScriptLoaded = false;
   isEditorContentLoaded = false;
@@ -109,6 +126,16 @@ export class NotesListWithEditorComponent implements OnInit, OnDestroy, AfterVie
   fabTogglerState = 'inactive';
 
   isReadOnly = true;
+
+
+  public closeSearch(): void {
+    this.searchVisible = false;
+  }
+
+  public openSearch(): void {
+    this.searchVisible = true;
+    this.inputSearch.nativeElement.focus();
+  }
 
   showFabItems() {
     this.fabTogglerState = 'active';
@@ -598,8 +625,8 @@ export class NotesListWithEditorComponent implements OnInit, OnDestroy, AfterVie
     this.searchNotes();
   }
 
-  onSearchMobile(filter) {
-    this.doSearchNotes(filter);
+  onSearchMobile() {
+    this.doSearchNotes(this.searchFilter);
   }
 
   searchNotes() {
