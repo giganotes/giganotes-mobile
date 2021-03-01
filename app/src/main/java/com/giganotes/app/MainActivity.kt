@@ -45,6 +45,7 @@ class MainActivity : AppCompatActivity() {
         myWebView = findViewById(R.id.webkit)
         myWebView.settings.javaScriptEnabled = true
         myWebView.settings.domStorageEnabled = true
+        myWebView.settings.allowFileAccessFromFileURLs = true
 
         myWebView.addJavascriptInterface(WebAppInterface(myWebView, this), "Android")
         myWebView.loadUrl("file:///android_asset/index.html");
