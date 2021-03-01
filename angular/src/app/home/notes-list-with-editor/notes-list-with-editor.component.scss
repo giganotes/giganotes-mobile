@@ -155,3 +155,13 @@
     width: 24px;
     height: 24px;
   }
+
+  .note-icon {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  font-size: 32px;
+  box-sizing: content-box;
+  border-radius: 50%;
+  padding: 4px;
+}

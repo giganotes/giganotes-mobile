@@ -330,6 +330,7 @@ export class NotesListWithEditorComponent implements OnInit, OnDestroy, AfterVie
     private dynamicScriptLoaderService: DynamicScriptLoaderService,
     private router: Router,
     private dialog: MatDialog) {
+      iconRegistry.addSvgIcon('note-icon', sanitizer.bypassSecurityTrustResourceUrl('./assets/icon-58x64.svg'));
   }
 
   async loadListItems() {

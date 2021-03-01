@@ -95,7 +95,7 @@
                   [class.list-item-selected]="this.selectedNoteInfo.id == note.id"
                   mwlDraggable [dropData]="note.id" [showOriginalElementWhileDragging]="true"
                 >
-                  <mat-icon matListIcon class="avatar">description</mat-icon>
+                  <mat-icon svgIcon="note-icon" class="note-icon"></mat-icon>
                   <span *ngIf="note.title.length > 0">{{ note.title }}</span>
                   <span *ngIf="note.title.length == 0">Untitled note</span>
                 </mat-list-item>
@@ -268,7 +268,7 @@
           (click)="onNoteClick(note)"
           [class.list-item-selected]="this.selectedNoteInfo == note"
         >
-          <mat-icon matListIcon class="avatar">description</mat-icon>
+          <mat-icon svgIcon="note-icon" class="note-icon"></mat-icon>
           <span *ngIf="note.title.length > 0">{{ note.title }}</span>
           <span *ngIf="note.title.length == 0">Untitled note</span>
         </mat-list-item>
