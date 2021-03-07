@@ -296,7 +296,11 @@ export class NotesListWithEditorComponent implements OnInit, OnDestroy, AfterVie
     if (this.isOffline) {
       return;
     }
-    await this.saveCurrentNote();
+    
+    if (!this.screenService.isMobile) {
+      await this.saveCurrentNote();
+    }
+    
     await this.syncService.doSync();
 
     // We should reload menu items and list items after sync
