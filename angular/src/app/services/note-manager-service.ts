@@ -31,37 +31,11 @@ export class NoteManagerService {
     }
 
     async removeNote(id: string): Promise<void> {
-    /*  const promise = new Promise(function (resolve, reject) {
-        ipcRenderer.once('note-manager-service-removenote-reply', (event, arg) => {
-            var result = EmptyResultResponse.deserializeBinary(arg).toObject() as EmptyResultResponse.AsObject;
-            if (result.success) {
-              resolve()
-            } else {
-              reject(result.errorcode)
-            }
-        });
-      });
-
-      ipcRenderer.send('note-manager-service-removenote-request', { id: id});
-      return promise;*/
-      return null;
+      return this.interopService.removeNote(id);
     }
 
     async removeFolder(id: string): Promise<void> {
-    /*  const promise = new Promise(function (resolve, reject) {
-        ipcRenderer.once('note-manager-service-removefolder-reply', (event, arg) => {
-          var result = EmptyResultResponse.deserializeBinary(arg).toObject() as EmptyResultResponse.AsObject;
-          if (result.success) {
-            resolve()
-          } else {
-            reject(result.errorcode)
-          }
-        });
-      });
-
-      ipcRenderer.send('note-manager-service-removefolder-request', { id: id});
-      return promise;*/
-      return null;
+      return this.interopService.removeFolder(id);
     }
 
     async getRootFolder(): Promise<Folder> {

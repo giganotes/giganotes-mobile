@@ -17,6 +17,8 @@ import {
   GetNoteById,
   GetNoteByIdResponse,
   SearchNotes,
+  RemoveNote,
+  RemoveFolder,
   CreateNote, CreateNoteResponse, CreateFolder, CreateFolderResponse, UpdateNote, UpdateFolder
 } from '../../proto/messages_pb';
 import {AuthResponse} from '../model/server-responses-models/auth-response';
@@ -292,6 +294,20 @@ export class InteropService {
 
   async synchronize(): Promise<void> {
     return this.runCommand('runCoreCommand', {command : 7});
+  }
+
+  async removeNote(id: string): Promise<void> {
+     const removeCommand = new RemoveNote();
+     removeCommand.setNoteid(id);
+     const commandData = base64.stringify(removeCommand.serializeBinary());
+     await this.runCommand('runCoreCommand', {command : 16, data: commandData});
+  }
+
+  async removeFolder(id: string): Promise<void> {
+     const removeCommand = new RemoveFolder();
+     removeCommand.setFolderid(id);
+     const commandData = base64.stringify(removeCommand.serializeBinary());
+     await this.runCommand('runCoreCommand', {command : 17, data: commandData});
   }
 
   async searchNotes(query: string, folderId: string): Promise<Note[]> {
