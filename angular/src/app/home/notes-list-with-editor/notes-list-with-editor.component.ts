@@ -165,6 +165,7 @@ export class NotesListWithEditorComponent implements OnInit, OnDestroy, AfterVie
       menubar: false,
       statusbar: false,
       branding: false,
+      contextmenu: !this.screenService.isMobile,
       toolbar:
         "print | insert | undo redo | formatselect | bold italic underline backcolor forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | table | code codesample",
       link_list: async function(success) {
@@ -296,11 +297,11 @@ export class NotesListWithEditorComponent implements OnInit, OnDestroy, AfterVie
     if (this.isOffline) {
       return;
     }
-    
+
     if (!this.screenService.isMobile) {
       await this.saveCurrentNote();
     }
-    
+
     await this.syncService.doSync();
 
     // We should reload menu items and list items after sync
@@ -661,6 +662,7 @@ export class NotesListWithEditorComponent implements OnInit, OnDestroy, AfterVie
       if (this.notes.length > 0) {
         this.selectFirstNote();
       } else {
+        this.selectedNote.id = '';
         this.selectedNote.title = '';
         this.selectedNote.text = '';
       }
@@ -679,14 +681,16 @@ export class NotesListWithEditorComponent implements OnInit, OnDestroy, AfterVie
         event.event.preventDefault();
       }
     }
+
+    if (element.tagName.toUpperCase() == "IMG") {
+        // Extract BLOB from SRC property
+        // Save blob to temporary image file
+        // Open the image file in default program
+    }
   }
 
   async onAddToFavorites() {
     this.noteService.addToFavorites(this.selectedNote.id);
-  }
-
-  onNoteNameInputFocusOut() {
-    this.onSaveNote();
   }
 
   onChangeFolder() {
