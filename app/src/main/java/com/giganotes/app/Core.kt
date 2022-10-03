@@ -13,7 +13,7 @@ object Core {
         initLogging()
 
         val initCommand = Messages.InitData.newBuilder()
-            .setApiPath("https://backend.giganotes.com")
+            .setApiPath("https://backend.giganotes.ru")
             .setDataPath(dataDir)
             .build()
 

@@ -4,6 +4,6 @@ export const AppConfig = {
   clientType: '1',
 //  apiUrl: "localhost:8081",
 //  scheme: 'http://'
-  apiUrl: "backend.giganotes.com",
+  apiUrl: "backend.giganotes.ru",
   scheme: 'https://'
 };
